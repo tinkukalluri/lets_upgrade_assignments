@@ -1,4 +1,3 @@
 create table countries (
     cname varchar(255)
-
 );
