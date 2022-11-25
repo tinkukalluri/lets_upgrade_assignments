@@ -1,11 +1,1 @@
-
-// this is to create table students
-create table students (
-    uid int auto_increment primary key,
-    first_name varchar(255),
-    last_name varchar(255),
-    programCode varchar(255)
-);
-
-// the query to get first_name , last_name as aliases First Name and Last Name
 select first_name AS 'First Name' ,  last_name AS 'Last Name' from students;
