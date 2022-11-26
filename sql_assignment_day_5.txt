@@ -1,0 +1,55 @@
+create table Hotel(
+	hotel_no int auto_increment primary key,
+    Name varchar(512),
+    address varchar(1000)
+);
+
+create table Room(
+	room_no int primary key auto_increment,
+    hotel_no int,
+    type varchar(255),
+    price int,
+    foreign key(room_no) references Hotel(hotel_no)
+);
+
+create table guest(
+	guest_no int primary key auto_increment,
+    name varchar(255),
+    address varchar(1000)
+);
+
+create table bookings(
+	hotel_no int ,
+    guest_no int ,
+    room_no int,
+    date_from datetime,
+    date_to datetime,
+    foreign key(hotel_no) references Hotel(hotel_no),
+    foreign key(guest_no) references guest(guest_no),
+    foreign key(room_no) references room(room_no)
+);
+
+to add booking_no to existing bookings table--  
+alter table bookings add column booking_no int;
+alter table bookings add constraint primary key(booking_no) ;
+alter table bookings modify booking_no int auto_increment;
+
+show create table room;
+alter table room drop constraint room_ibfk_1;
+alter table room add constraint foreign_key_hotel foreign key (hotel_no) references hotel(hotel_no);
+
+desc room;
+desc bookings;
+
+insert into hotel (name , address) value('tintin' , '16-11-511/d/55');
+insert into room (hotel_no , type , price ) value(1 , '5 star' , 9999999);
+insert into guest(name , address) value('K. Abhinandan kumar' , '16-11-511/d/310');
+insert into bookings(hotel_no , guest_no , room_no , date_from , date_to )
+value (1 , 1 , 1 ,"2022-11-10 12:00:00" ,"2022-11-30 12:00:00");
+
+select * from bookings;
+
+select * from bookings where hotel_no = (select hotel_no from hotel where name="tintin")
+and room_no = (select room_no from room where room_no =1) and guest_no = (
+	select guest_no from guest where name="K. Abhinandan kumar"
+);
